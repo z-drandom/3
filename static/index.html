@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EHS 知识库</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- 顶栏：搜索 + 到期提醒 + 管理入口 -->
+<header class="topbar">
+  <div class="brand" onclick="App.goHome()">
+    <span class="logo">EHS</span><span class="brand-text">知识库</span>
+  </div>
+  <div class="searchbox">
+    <input id="q" type="search" placeholder="全文搜索：支持中文分词，如「硫酸 泄漏 处置」" autocomplete="off">
+    <button id="btnSearch" class="btn primary">搜索</button>
+  </div>
+  <div class="top-actions">
+    <label class="statusfilter">
+      <select id="statusFilter">
+        <option value="">全部状态</option>
+        <option value="生效">仅生效</option>
+        <option value="废止">仅废止</option>
+      </select>
+    </label>
+    <button id="btnReview" class="btn warn">到期提醒 <span id="dueCount" class="badge">0</span></button>
+    <button id="btnAdmin" class="btn">管理视图</button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- 左侧：目录树 + 标签 -->
+  <aside class="sidebar">
+    <div class="side-tabs">
+      <button class="tab active" data-tab="tree">目录</button>
+      <button class="tab" data-tab="tags">标签</button>
+    </div>
+    <div id="paneTree" class="side-pane"></div>
+    <div id="paneTags" class="side-pane hidden"></div>
+    <div class="side-foot" id="stats"></div>
+  </aside>
+
+  <!-- 中间：正文 / 搜索结果 -->
+  <main class="content" id="content">
+    <div class="placeholder">正在加载知识库…</div>
+  </main>
+
+  <!-- 右侧抽屉：到期提醒 / 管理面板 -->
+  <aside class="drawer hidden" id="drawer">
+    <div class="drawer-head">
+      <span id="drawerTitle">到期提醒</span>
+      <button class="btn tiny" onclick="App.closeDrawer()">关闭</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </aside>
+</div>
+
+<!-- 弹窗容器：登录 / 编辑 / 上传 -->
+<div class="modal-mask hidden" id="modalMask" onclick="App.closeModal(event)">
+  <div class="modal" id="modal" onclick="event.stopPropagation()"></div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

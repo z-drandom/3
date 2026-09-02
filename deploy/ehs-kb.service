@@ -1,0 +1,27 @@
+# /etc/systemd/system/ehs-kb.service
+# Linux 开机自启单元文件
+[Unit]
+Description=EHS 知识库（FastAPI，文件即数据库）
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ehs
+Group=ehs
+WorkingDirectory=/opt/ehs-kb
+# 环境变量集中放在 /etc/ehs-kb.env（口令写在这里，权限设为 600）
+EnvironmentFile=/etc/ehs-kb.env
+ExecStart=/opt/ehs-kb/.venv/bin/python -m uvicorn app.main:app --host ${EHS_HOST} --port ${EHS_PORT} --workers 1
+Restart=always
+RestartSec=5
+# 只允许写知识库目录与日志，其余文件系统只读，降低误操作风险
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+ReadWritePaths=/srv/ehs
+StandardOutput=append:/var/log/ehs-kb.log
+StandardError=append:/var/log/ehs-kb.log
+
+[Install]
+WantedBy=multi-user.target

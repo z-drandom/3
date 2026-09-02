@@ -1,0 +1,9 @@
+# EHS 知识库 依赖清单（建议 Python 3.10+）
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20      # 处理网页上传的 multipart 表单
+PyYAML==6.0.2                 # 解析/写回 Markdown 头部 YAML frontmatter
+Markdown==3.7                 # 服务端渲染 Markdown（含表格扩展）
+Pygments==2.19.1              # 代码块高亮（fenced_code 扩展依赖）
+jieba==0.42.1                 # 中文分词，用于全文检索
+watchdog==6.0.0               # 监听 docs 目录文件变化，热重载索引
